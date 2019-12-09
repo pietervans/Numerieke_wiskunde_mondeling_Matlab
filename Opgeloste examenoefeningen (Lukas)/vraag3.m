@@ -8,3 +8,5 @@ conditieRel = (conditieAbs.*x)./(mijnf(x));
 
 hold on
 plot(x, conditieAbs, 'r');
+
+
