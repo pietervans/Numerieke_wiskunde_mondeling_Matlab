@@ -8,5 +8,13 @@ else
 end
 end
 
-% probleeem bij koppel(3,0.3); andere koppels geen probleem
-% 6) regel 4 vervangen door abs(y-b) <= eps(machinenauwkeurigheid)
+
+% 3) enkel 0.5 kan met een eindig aantal binaire getallen worden voorgesteld,
+% de andere kommagetallen niet
+
+% 4) zie slechte foto
+
+% 5) geen idee
+
+% 6) regel 4 vervangen door abs(y-b) <= 0.1*(abs(a)+abs(b))*eps
+% eps = machinenauwkeurigheid
