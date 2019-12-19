@@ -1,15 +1,25 @@
-function x1 = newtonraphsonpoly(x0, f)
+function x1 = newtonraphsonpoly(p, start, tol)
 
-f2 = diff(f);
-x = x0;
-x1 = x0 - subs(f)/subs(f2);
-k = 1;
+    if nargin < 3
+        tol = 1e-6;
+    end
 
-while k<10 && abs(x1-x0)>8*eps(double(abs(x1))) % abs berekent norm
-x0 = x1;
-x = x0;
-x1 = double(x0 - subs(f)/subs(f2)); % zonder double wordt er symbolisch gerekend
-k = k + 1;
-end
+    x0 = inf;
+    x1 = start;
 
+    Kmax = 100;
+    dp = polyder(p);
+    for k=1:Kmax
+        x0 = x1;
+        f = polyval(p, x0);
+        df = polyval(dp, x0);
+        x1 = x0 - f/df;
+        if(abs(x0-x1)<tol)
+            return;
+        end
+    end
+
+    if k >= Kmax
+        x1 = NaN;%warning('no convergence');
+    end
 end
