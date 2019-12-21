@@ -10,7 +10,7 @@ function ws = newtonraphson(f,df,start,tol)
         g = f(ws(k,1));
         h = df(ws(k,1));
         ws(k+1,1) = ws(k,1) - g/h;
-        fout(k,1) = (abs(ws(k+1,1)-ws(k,1)))/abs(ws(k,1));
+        fout(k,1) = (abs(ws(k+1,1)-ws(k,1)))/abs(ws(k+1,1));
         iteraties = iteraties + 1;
         if abs(ws(k+1,1)-ws(k,1)) < tol
             break
