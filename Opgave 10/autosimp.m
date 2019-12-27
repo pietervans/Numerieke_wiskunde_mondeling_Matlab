@@ -6,7 +6,7 @@ function output = autosimp(a,b,f,K,fout)
     S = 5*So;
     xx = [h];
     yy = [error(I)];
-    while k<K & abs(S-So)>fout
+    while k<K
         h = h/2;
         S = So;
         So = 0;
@@ -14,11 +14,17 @@ function output = autosimp(a,b,f,K,fout)
             x = a + (2*j-1)*h;
             So = So + f(x);
         end
-        I = 0.5*I + h/3*(4*So - 2*S);
+        
+        II = 0.5*I + h/3*(4*So - 2*S);
+        if abs(II-I) < fout
+            break
+        end
+        I = II;
         xx(k+2) = h;
         yy(k+2) = error(I);
         k = k+1;
         disp(k);
+        
     end
     plot(xx,yy)
     output = I;
@@ -35,7 +41,7 @@ function output = error(I)
     fun = @(x) sin(x).*x;
     integraal = integral(fun,0,5);
     benadering = I;
-    error = abs(benadering - integraal)/abs(benadering);
+    error = abs(benadering - integraal)/abs(integraal);
     output = error;
 end
 
