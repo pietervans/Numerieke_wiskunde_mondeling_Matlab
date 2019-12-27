@@ -32,7 +32,7 @@ k = 0;
 Kmax = 100;
 convergentiereeks = zeros(1, Kmax+1);
 convergentiereeks(1) = a_inverse;
-while and(abs(a_inverse - x) > 0.5*10^(-14), k<Kmax)
+while and(abs(a_inverse - 1/a) > 0.5*10^(-14), k<Kmax)
    x = a_inverse;
    a_inverse = F(a, x);
    convergentiereeks(k+2) = a_inverse;
