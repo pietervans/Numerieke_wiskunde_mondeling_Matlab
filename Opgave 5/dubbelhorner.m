@@ -29,5 +29,11 @@ function [output, V, O, steps] = dubbelhorner(a, x)
     %output van complex getal
     output = A+B*1i;
     Complexiteit = [V,O]
-    steps 
+    steps
+    
+    % controle
+    waarde = polyval(a,x);
+    rel_error = abs(waarde-output)/abs(waarde)
+    
+    
 end

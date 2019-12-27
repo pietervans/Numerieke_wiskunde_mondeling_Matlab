@@ -1,6 +1,6 @@
 % functie f (symbolisch), aantal te zoeken nulptn. n, startwaarde x0
 % invoer:
-% syms x; f = x^6 + 1; newtonraphsondeflate(f, 6, 1 + 1i)
+syms x; f = x^6 + 1; newtonraphsondeflate(f, 6, 1 + 1i)
 
 
 
