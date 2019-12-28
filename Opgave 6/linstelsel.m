@@ -1,31 +1,47 @@
-% We laden het probleem
-% hieruit krijgen we de matrix A, het rechterlid b en de startwaarde x0
-load jgs.mat
-
-% We halen D, L en U uit de matirx A
-D = diag(diag(A));
+function [ x ] = linstelsel( A,b ,X ,Kmax,e, m)
+%lost het stelsel Ab = X op met X een gekozen startwaarde en m de methode:
+%m = j of g
+[r,k]=size(A);
+if r~=k
+    disp('A moet vierkante matrix zijn');
+    return
+end
 L = tril(A,-1);
-U = triu(A, 1);
+R = triu(A,1);
+D = A-L-R
+B = inv(D)*(L+R);
+jacobiwaarde=norm(B)
+if jacobiwaarde>=1
+    disp('jacobi methode convergeert niet');
+end
 
-% Initalisatie van de het stopcriterium
-Kmax = 50;
+H=inv(L+D)*R;
+gausswaarde=norm(H)
+if gausswaarde>=1
+    disp('gauss-seidel methode convergeert niet');
+    return
+end
 
-% Initialisatie van de startvector
-x_jacobi = x0;
-x_gauss = x0;
+%nauwkeurigheid van Jacobi
+[xj fkj] = jacobi(A,b,X,Kmax, e);
+%met x de oplossing volgens jacobi en fk1 de fouten op x1 voor k
+[xg fkg] = gauss_Seidel(A,b,X,Kmax,e);
+kj = [1:length(fkj)]
+kg = [1:length(fkg)]
 
-% Geheugen voorzien voor de fout in elke stap
-rel_fout_jacobi = zeros(1,Kmax);
-rel_fout_gauss = rel_fout_jacobi;
+% Top plot
+nexttile
+plot(kj,fkj)
+title('Nauwkeurigheid bij Jacobi')
 
-% Iteratief oplossen ven hat stelsel
-for k = 1:Kmax
+% Bottom plot
+nexttile
+plot(kg,fkg)
+title('Nauwkeurigheid bij Gauss-Seidel')
 
-  x_jacobi = D\(-(L+U)*x_jacobi+b); % iteratievoorschrift Jacobi
-  x_gauss = (L+D)\(-U*x_gauss+b); % iteratievoorschrift Gauss-seidel
-  
-  % bereken de fout ven het resultaat bekomen in deze stap
-  rel_fout_jacobi(k) = norm(x_jacobi-x_exact)/norm(x_exact);
-  rel_fout_gauss(k) = norm(x_gauss-x_exact)/norm(x_exact);
+if m == 'j'
+    x = xj
+else
+    x = xg
 
 end

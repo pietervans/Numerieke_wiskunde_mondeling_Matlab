@@ -1,5 +1,5 @@
 function sol = solveLU(n, range)
-    %lost een willekeurig stelsel van n vergelijkingen en n onbekenden op via Crout, de coëfficienten gaan van 0 tot range
+    %lost een willekeurig stelsel van n vergelijkingen en n onbekenden op via Crout, de coï¿½fficienten gaan van 0 tot range
     stelsel = round(rand(n,(n+1))*range)
     disp(stelsel)
     [L, U, P] = croutfactors(stelsel)
