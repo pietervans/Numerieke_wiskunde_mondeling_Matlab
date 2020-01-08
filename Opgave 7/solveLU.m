@@ -6,7 +6,7 @@ function sol = solveLU(n, range)
     B = stelsel(:,(n+1))
     stelsel(:,(n+1)) = []
     C = stelsel
-    X = cell(n,1) %kolommatrix van de n onbekenden
+    X = zeros(n,1) %kolommatrix van de n onbekenden
     %C*X = B
     %PC*X = P*B
     %L*U*X = P*B, stel Y = U*X
@@ -14,7 +14,7 @@ function sol = solveLU(n, range)
     %U*X = Y en zoek X via achterwaardse substitutie
     B = P*B
     %voorwaardse substitiutie voor L*Y = B
-    Y = cell(n,1)
+    Y = zeros(n,1)
     Y(1,1) = B(1,1)/L(1,1)
     for i = 2:n
         teller = B(i,1)
@@ -28,9 +28,10 @@ function sol = solveLU(n, range)
     X(n,1) = Y(n,1)
     for i = (n-1):-1:1 %van n-1 naar 1 met stappengrootte -1
         X(i,1) = Y(i,1)
-        for j = n:-1:n-(i+1)
+        for j = n:-1:i+1
             X(i,1) = X(i,1) -U(i,j)*X(j,1)
         end 
+         X(i,1) = X(i,1)/U(i,i)
 end
 
 sol = X
